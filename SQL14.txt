@@ -1,0 +1,70 @@
+信息系统与数据库技术练习14答题卡
+
+班级：信管1班     
+姓名： 陈国志  
+学号： 20190307140
+
+注：请将答案放置在序号下方。*/
+
+（一）
+1.USE PROJECT
+GO
+2.CREATE PROC p_ep1
+AS
+SELECT Employee.Eid,Ename,Esex,Did,Project.Pid,Pname,Wages
+FROM Employee JOIN Project JOIN EP
+ON Project.Pid=EP.Pid
+ON Employee.Eid=EP.Eid
+GO
+3.EXEC p_ep1
+GO
+4.CREATE PROC p_ep2
+@Ename VARCHAR(20),@Did VARCHAR(20)
+AS
+SELECT Employee.Eid,Ename,Did,Project.Pid,Pname,WorkDate,Wages
+FROM Employee JOIN Project JOIN EP
+ON Project.Pid=EP.Pid
+ON Employee.Eid=EP.Eid
+WHERE Ename=@Ename AND Did=@Did
+GO
+5.EXEC p_ep2 @Ename='1990-07-01 00:00:00.000',@Did='D001' 
+GO
+6.CREATE PROC p_ep3
+@Dname VARCHAR(20)='财务部'
+AS
+SELECT Department.Did,Dname, Employee.Eid,Ename,Esex,WorkDate
+FROM Department JOIN Employee
+ON Department.Did=Employee.DID
+WHERE Dname=@Dname
+GO
+7.EXEC p_ep3
+8.EXEC p_ep3 @Dname='人事部'
+GO
+9.CREATE PROC p_ep4
+@BasePay INT
+AS
+SELECT *
+FROM Employee
+WHERE BasePay<@BasePay
+GO
+10.EXEC p_ep4 @BasePay=8000
+GO
+11.CREATE PROC p_emp
+@Ename VARCHAR(10)
+AS
+SELECT *
+FROM Employee
+WHERE Ename LIKE '%'+@Ename+'%'
+GO
+12.EXEC p_emp @Ename='丽'
+13.EXEC sp_helptext p_emp
+GO
+14.ALTER PROC p_ep3
+@Ename VARCHAR(10)
+AS
+SELECT *
+FROM Employee
+WHERE Ename LIKE '%'+@Ename+'%'
+GO
+15.EXEC sp_helptext p_ep3
+16.DROP PROC p_ep3
